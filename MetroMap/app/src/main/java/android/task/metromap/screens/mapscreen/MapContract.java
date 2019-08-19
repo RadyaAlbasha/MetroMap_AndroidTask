@@ -9,12 +9,15 @@ import com.google.android.gms.maps.model.LatLng;
 import java.util.ArrayList;
 
 public interface MapContract {
-    public interface IPresnter{
-        LatLng addMarkerToMap(Metro metro);
-        void loadJson();
+    interface IPresnter{
+        void loadMetroJsonAndDraw();
+        ArrayList<Metro> getData();
+        void addMarkerToMap(Metro metro);
+        LatLng getLatLng(String positionStr);
+        void connectToPoints(String from , String to);
+        void drawMarkersAndLines( ArrayList<Metro> data);
     }
-    public interface IView{
+    interface IView{
         GoogleMap getmMap();
-        void addMarkers( ArrayList<Metro> data);
     }
 }

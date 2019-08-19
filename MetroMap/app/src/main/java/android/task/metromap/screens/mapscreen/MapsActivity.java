@@ -44,8 +44,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        //loadJson and add markers
-        presenter.loadJson();
+        //loadJson and add markers and lines
+        presenter.loadMetroJsonAndDraw();
 
     }
 
@@ -67,57 +67,5 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public GoogleMap getmMap() {
         return mMap;
     }
-
-    @Override
-    public void addMarkers(ArrayList<Metro> data) {
-        for(int i = 0 ; i< data.size() ; i++){
-            if(i==0){
-                LatLng position = presenter.addMarkerToMap(data.get(0));
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(position,12));
-            }
-            else{
-                presenter.addMarkerToMap(data.get(i));
-            }
-        }
-    }
-/*private void loadJson(){
-        int cachSize= 5*1024*1024;//5mp
-        Cache cache= new Cache(getCacheDir(),cachSize);
-        OkHttpClient okHttpClient = new OkHttpClient.Builder().cache(cache).build();
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://atpnet.net/")
-                .client(okHttpClient)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        RetrofitInterface request = retrofit.create(RetrofitInterface.class);
-        Call<JsonResponse> call = request.getJSON();
-
-        call.enqueue(new Callback<JsonResponse>() {
-            @Override
-            public void onResponse(Call<JsonResponse> call, Response<JsonResponse> response) {
-                data = response.body().getMetroRows();
-
-                // Add a marker and move the camera
-
-                for(int i = 0 ; i< data.size() ; i++){
-                    if(i==0){
-                        LatLng position = presenter.addMarkersToMap(data.get(0) , mMap);
-                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(position,12));
-                    }
-                    else{
-                        presenter.addMarkersToMap(data.get(i),mMap);
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<JsonResponse> call, Throwable t) {
-                Toast.makeText(MapsActivity.this, "Call Fail" + t.getMessage(), Toast.LENGTH_LONG).show();
-            }
-        });
-    }*/
-
 
 }
